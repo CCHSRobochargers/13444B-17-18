@@ -63,8 +63,13 @@ task autonomous()
   // Insert user code here.
   // ..........................................................................
 
-  // Remove this function call once you have "real" code.
-  AutonomousCodePlaceholderForTesting();
+
+  delay(3000);
+  motor[rightMotor] = 100;
+  motor[leftMotor] = 100;
+  delay(1000);
+  motor[armMotor] = 50;
+  motor[armHand] = 100;
 }
 
 /*---------------------------------------------------------------------------*/
