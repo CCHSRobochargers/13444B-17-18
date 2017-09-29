@@ -65,11 +65,19 @@ task autonomous()
 
 
   delay(3000);
-  motor[rightMotor] = 100;
-  motor[leftMotor] = 100;
+
+  motor[rightMotor] = 25;
+  motor[leftMotor] = 25;
   delay(1000);
+
+ 	// Stop robot, moving only arm and claw.
+ 	motor[rightMotor] = 0;
+ 	motor[leftMotor] = 0;
   motor[armMotor] = 50;
+  delay(1000);
+  motor[armMotor] = -50;
   motor[armHand] = 100;
+
 }
 
 /*---------------------------------------------------------------------------*/
