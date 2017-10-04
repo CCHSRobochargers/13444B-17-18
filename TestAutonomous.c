@@ -23,6 +23,28 @@
 
 #include "JoystickDriver.c"
 
+void accel(int startSpeed, int endSpeed, int pause)
+{
+	if (startSpeed < endSpeed)
+	{
+		for(int j = startSpeed; j < endSpeed; j++)
+		{
+			motor[leftMotor] = j;
+			motor[rightMotor] = j;
+			wait1Msec(pause);
+		}
+	}
+	else
+	{
+			for(int j = startSpeed; j > endSpeed; j--)
+		{
+			motor[leftMotor] = j;
+			motor[rightMotor] = j;
+			wait1Msec(pause);
+		}
+	}
+}
+
 /*---------------------------------------------------------------------------*/
 /*                          Pre-Autonomous Functions                         */
 /*                                                                           */
@@ -61,12 +83,67 @@ void pre_auton()
 
 task autonomous()
 {
-  // ..........................................................................
-  // Insert user code here.
-  // ..........................................................................
+	  accel(0, 127, 2);
+		wait1Msec(1000);
+		accel(127, 0, 2);
+		motor[leftMotor] = 0;
+		motor[rightMotor] = 0;
+		wait1Msec (1000);
+		//incramintes the motors up by 2 untill it reaches the maximun speed. Then it waits 1 second
 
-  // Remove this function call once you have "real" code.
-  AutonomousCodePlaceholderForTesting();
+		motor[armHand] = -100;
+		wait1Msec(1000);
+		motor[armHand] = -20;
+		//close the hand
+
+		motor[armMotor] = -100;
+		wait1Msec(400);
+		motor[armMotor] = -15;
+		wait1Msec(800);
+		//first turn
+		motor[rightMotor] = -70;
+		motor[leftMotor] = 70;
+		wait1Msec (200);
+		motor[rightMotor] = 0;
+		motor[leftMotor] = 0;
+
+		accel(0, 60, 2);
+		wait1Msec(500);
+		accel(60, 0, 2);
+		wait1Msec(900);
+		motor[rightMotor] = 0;
+		motor[leftMotor] = 0;
+
+		// second turn
+		wait1Msec(1000);
+		motor[rightMotor] = 70;
+		motor[leftMotor] = -70;
+		wait1Msec(200);
+
+		// forward
+		accel(0, 100, 2);
+		wait1Msec(500);
+		accel(100, 0, 2);
+		wait1Msec(750);
+		motor[rightMotor] = 0;
+		motor[leftMotor] = 0;
+
+		motor[armHand] = 100;
+		wait1Msec(800);
+		motor[armHand] = 0;
+
+		wait1Msec(100);
+		motor[rightMotor] = -70;
+		motor[leftMotor] = -70;
+		wait1Msec(400);
+		motor[rightMotor] = 0;
+		motor[leftMotor] = 0;
+
+	motor[rightMotor] = 0;
+		motor[leftMotor] = 0;
+		motor[armMotor] = 0;
+		motor[armHand] = 0;
+
 }
 
 /*---------------------------------------------------------------------------*/
@@ -79,70 +156,11 @@ task autonomous()
 /*  You must modify the code to add your own robot specific commands here.   */
 /*---------------------------------------------------------------------------*/
 
-void accel(int startSpeed, int endSpeed, int pause)
-{
-	if (startSpeed < endSpeed)
-	{
-		for(int j = startSpeed; j < endSpeed; j++)
-		{
-			motor[leftMotor] = j;
-			motor[rightMotor] = j;
-			wait1Msec(pause);
-		}
-	}
-	else
-	{
-			for(int j = startSpeed; j > endSpeed; j--)
-		{
-			motor[leftMotor] = j;
-			motor[rightMotor] = j;
-			wait1Msec(pause);
-		}
-	}
-}
-
 task usercontrol()
 {
   // User control code here, inside the loop
 
 	while (true)
-	{
-		while (!vexRT[Btn8U])
-			; // wait
-	  accel(0, 127, 2);
-		wait1Msec(500);
-		accel(127, 0, 2);
-		motor[leftMotor] = 0;
-		motor[rightMotor] = 0;
-		wait1Msec (1000);
-		motor[armHand] = -100;
-		wait1Msec(600);
-		motor[armHand] = -20;
-		motor[armMotor] = -100;
-		wait1Msec(400);
-		motor[armMotor] = -10;
-		motor[rightMotor] = -90;
-		motor[leftMotor] = 90;
-		wait1Msec (190);
-		motor[rightMotor] = 0;
-		motor[leftMotor] = 0;
-		motor[rightMotor] = 100;
-		motor[leftMotor] = 100;
-		wait1Msec(500);
-		motor[rightMotor] = 0;
-		motor[leftMotor] = 0;
-		motor[rightMotor] = 70;
-		motor[leftMotor] = -70;
-		wait1Msec(190);
-		motor[rightMotor] = 0;
-		motor[leftMotor] = 0;
-		while (!vexRT[Btn8D])
-			;
-			motor[armMotor] = 0;
-			motor[armHand] = 0;
-	}
-
-  while (false)
   {
 		//Assigns the value of the Y1 axis to the left motor
 		motor[leftMotor] = vexRT[Ch3];
