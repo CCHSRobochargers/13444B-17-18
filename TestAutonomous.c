@@ -69,11 +69,17 @@ void pre_auton()
 
 task autonomous()
 {
+		//pinching and picking up cone
+		motor[armHand] = -20;
+		motor[armMotor] = -100;
+		wait1Msec(400);
+		motor[armMotor] = -15;
+
 		resetMotorEncoder(rightMotor);
 		resetMotorEncoder(leftMotor);
 
-	  setMotorTarget(rightMotor, 48.0*ticksPerInch, 127, true);
-	  setMotorTarget(leftMotor,  48.0*ticksPerInch, 127, true);
+	  setMotorTarget(rightMotor, 56.0*ticksPerInch, 127, true);
+	  setMotorTarget(leftMotor,  56.0*ticksPerInch, 127, true);
 
 	  while (!getMotorTargetCompleted(rightMotor) && !getMotorTargetCompleted(leftMotor))
 	  	wait1Msec(10);
@@ -86,16 +92,6 @@ task autonomous()
 
 	  while (!getMotorTargetCompleted(rightMotor) && !getMotorTargetCompleted(leftMotor))
 	  	wait1Msec(10);
-
-		motor[armHand] = -100;
-		wait1Msec(1000);
-		motor[armHand] = -20;
-
-		//close the hand
-		motor[armMotor] = -100;
-		wait1Msec(400);
-		motor[armMotor] = -15;
-		wait1Msec(800);
 
 		//first turn
 //		motor[rightMotor] = -70;
