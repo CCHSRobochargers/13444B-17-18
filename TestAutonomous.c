@@ -26,10 +26,33 @@
 
 #include "JoystickDriver.c"
 
-static const float ticksPerInch = 627.2 / (4.0 * PI);
+static const float ticksPerInch = 0.95 * (627.2 / (4.0 * PI));
 //adjust to compensate for wheel slip
 static const float ticksPerRev = 1.11 * (ticksPerInch * 12.0 * PI);
 
+void move(float dist, int speed, bool hold)
+{
+	  resetMotorEncoder(rightMotor);
+		resetMotorEncoder(leftMotor);
+
+	  setMotorTarget(rightMotor, dist*ticksPerInch, speed, hold);
+		setMotorTarget(leftMotor, dist*ticksPerInch, speed, hold);
+
+		while (!getMotorTargetCompleted(rightMotor) && !getMotorTargetCompleted(leftMotor))
+	  	wait1Msec(10);
+}
+
+void spin(float dist, int speed, bool hold)
+{
+	  resetMotorEncoder(rightMotor);
+		resetMotorEncoder(leftMotor);
+
+	  setMotorTarget(rightMotor, dist*ticksPerRev, speed, hold);
+		setMotorTarget(leftMotor, -dist*ticksPerRev, speed, hold);
+
+		while (!getMotorTargetCompleted(rightMotor) && !getMotorTargetCompleted(leftMotor))
+	  	wait1Msec(10);
+}
 
 /*---------------------------------------------------------------------------*/
 /*                          Pre-Autonomous Functions                         */
@@ -75,66 +98,50 @@ task autonomous()
 		wait1Msec(400);
 		motor[armMotor] = -15;
 
-		resetMotorEncoder(rightMotor);
-		resetMotorEncoder(leftMotor);
+		//moving to the goal
+		move(56.0, 127, true);
 
-	  setMotorTarget(rightMotor, 56.0*ticksPerInch, 127, true);
-	  setMotorTarget(leftMotor,  56.0*ticksPerInch, 127, true);
+		//dropping the cone
+		motor[armHand] = 100;
+		wait1Msec(800);
+		motor[armHand] = 0;
 
-	  while (!getMotorTargetCompleted(rightMotor) && !getMotorTargetCompleted(leftMotor))
-	  	wait1Msec(10);
+		move(-11.0, 63, true);
 
-	  resetMotorEncoder(rightMotor);
-		resetMotorEncoder(leftMotor);
+	  spin(0.125, 63, false);
 
-	  setMotorTarget(rightMotor, ticksPerRev, 64, true);
-	  setMotorTarget(leftMotor, -ticksPerRev, 64, true);
+		//lowering the arm
+	  motor[armMotor] = 100;
+		wait1Msec(100);
+		motor[armMotor] = 0;
 
-	  while (!getMotorTargetCompleted(rightMotor) && !getMotorTargetCompleted(leftMotor))
-	  	wait1Msec(10);
+	  move(7.0, 63, false);
 
-		//first turn
-//		motor[rightMotor] = -70;
-//		motor[leftMotor] = 70;
-//		wait1Msec (200);
-//		motor[rightMotor] = 0;
-//		motor[leftMotor] = 0;
+	  //closing the hand
+	  motor[armHand] = -100;
+	  wait1Msec(100);
+	  motor[armHand] = -20;
 
-//		accel(0, 60, 2);
-//		wait1Msec(500);
-//		accel(60, 0, 2);
-//		wait1Msec(900);
-//		motor[rightMotor] = 0;
-//		motor[leftMotor] = 0;
+	  wait10Msec(10);
 
-//		// second turn
-//		wait1Msec(1000);
-//		motor[rightMotor] = 70;
-//		motor[leftMotor] = -70;
-//		wait1Msec(200);
+	  //lifting the arm
+	  motor[armMotor] = -100;
+		wait1Msec(400);
+		motor[armMotor] = -15;
 
-//		// forward
-//		accel(0, 100, 2);
-//		wait1Msec(500);
-//		accel(100, 0, 2);
-//		wait1Msec(750);
-//		motor[rightMotor] = 0;
-//		motor[leftMotor] = 0;
+		move(-7.0, 63, false);
 
-//		motor[armHand] = 100;
-//		wait1Msec(800);
-//		motor[armHand] = 0;
+		spin(-0.125, 63, false);
 
-//		wait1Msec(100);
-//		motor[rightMotor] = -70;
-//		motor[leftMotor] = -70;
-//		wait1Msec(400);
-//		motor[rightMotor] = 0;
-//		motor[leftMotor] = 0;
+		move(11.0, 63, false);
 
+		//dropping the second cone
+		motor[armHand] = 100;
+		wait1Msec(100);
+		motor[armHand] = 0;
+		motor[armMotor] = 0;
 //	motor[rightMotor] = 0;
 //		motor[leftMotor] = 0;
-//		motor[armMotor] = 0;
 //		motor[armHand] = 0;
 
 }
