@@ -120,20 +120,20 @@ task autonomous()
 	//closing the hand
 	motor[armHand] = -100;
 	wait1Msec(1000);
-	motor[armHand] = -20;
+	motor[armHand] = -40;
 
-	wait1Msec(300);
+	wait1Msec(200);
 
 	//lifting the arm
 	motor[armMotor] = -100;
 	wait1Msec(600);
 	motor[armMotor] = -15;
 
-	move(-7.0, 63, false);
+	move(-7.0, 53, false);
 
-	spin(-0.125, 63, false);
+	spin(-0.125, 53, false);
 
-	move(13.0, 63, false);
+	move(13.0, 53, false);
 
 	//dropping the second cone
 	motor[armHand] = 100;
