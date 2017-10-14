@@ -157,6 +157,10 @@ task autonomous()
 
 task usercontrol()
 {
+	//PID fixup
+	nMotorPIDSpeedCtrl[rightMotor] = RegIdle;
+	nMotorPIDSpeedCtrl[leftMotor] = RegIdle;
+
 	// User control code here, inside the loop
 
 	while (true)
