@@ -99,11 +99,11 @@ task autonomous()
 	motor[armMotor] = -15;
 
 	//moving to the goal
-	move(56.0, 127, true);
+	move(50.0, 127, true);
 
 	//dropping the cone
 	motor[armHand] = 100;
-	wait1Msec(800);
+	wait1Msec(1000);
 	motor[armHand] = 0;
 
 	move(-11.0, 63, true);
@@ -119,30 +119,27 @@ task autonomous()
 
 	//closing the hand
 	motor[armHand] = -100;
-	wait1Msec(100);
+	wait1Msec(1000);
 	motor[armHand] = -20;
 
-	wait10Msec(10);
+	wait1Msec(300);
 
 	//lifting the arm
 	motor[armMotor] = -100;
-	wait1Msec(400);
+	wait1Msec(600);
 	motor[armMotor] = -15;
 
 	move(-7.0, 63, false);
 
 	spin(-0.125, 63, false);
 
-	move(11.0, 63, false);
+	move(13.0, 63, false);
 
 	//dropping the second cone
 	motor[armHand] = 100;
-	wait1Msec(100);
+	wait1Msec(1000);
 	motor[armHand] = 0;
 	motor[armMotor] = 0;
-	//	motor[rightMotor] = 0;
-	//		motor[leftMotor] = 0;
-	//		motor[armHand] = 0;
 }
 
 /*---------------------------------------------------------------------------*/
