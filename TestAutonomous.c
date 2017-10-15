@@ -109,7 +109,7 @@ task autonomous()
 
 	//dropping the cone
 	motor[armHand] = 90;
-	wait1Msec(1500);
+	wait1Msec(1000);
 	motor[armHand] = 0;
 
 	move(-11.0, 63, true);
@@ -130,9 +130,9 @@ task autonomous()
 
 	//lifting the arm
 	setMotorTarget(armMotor, (int)(55.0 * armTicksPerDegree), 100, true);
-	while (!getMotorTargetCompleted(armMotor)) {
-		wait1Msec(10);
-	}
+	//while (!getMotorTargetCompleted(armMotor)) {
+	//	wait1Msec(10);
+	//}
 
 	move(-7.0, 53, false);
 
@@ -175,13 +175,13 @@ task usercontrol()
 		if(vexRT[Btn6U] == 1)
 		{
 			//Raise the arm
-			motor[armMotor] = -100;
+			motor[armMotor] = 100;
 		}
 		//Else, if button 6 down (right trigger) is pressed
 		else if(vexRT[Btn6D] == 1)
 		{
 			//Lower the arm
-			motor[armMotor] = 100;
+			motor[armMotor] = -100;
 		}
 		//Else (no button pressed)
 		else
