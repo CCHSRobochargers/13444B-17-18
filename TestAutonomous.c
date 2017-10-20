@@ -172,13 +172,13 @@ task usercontrol()
 		motor[rightMotor] = vexRT[Ch2];
 
 		//If button 6 up (right bumper) is pressed
-		if(vexRT[Btn6U] == 1)
+		if(vexRT[Btn6U]|| vexRT[Btn6UXmtr2])
 		{
 			//Raise the arm
 			motor[armMotor] = 100;
 		}
 		//Else, if button 6 down (right trigger) is pressed
-		else if(vexRT[Btn6D] == 1)
+		else if(vexRT[Btn6D] || vexRT[Btn6DXmtr2])
 		{
 			//Lower the arm
 			motor[armMotor] = -100;
@@ -191,9 +191,9 @@ task usercontrol()
 		}
 
 		// 7L / 7R controls the hand
-		if(vexRT[Btn7L] == 1)
+		if(vexRT[Btn7L]|| vexRT[Btn7LXmtr2])
 			motor[armHand] = 100;
-		else if(vexRT[Btn7R] == 1)
+		else if(vexRT[Btn7R]|| vexRT[Btn7RXmtr2])
 			motor[armHand] = -100;
 		else
 			motor[armHand] = 0;
