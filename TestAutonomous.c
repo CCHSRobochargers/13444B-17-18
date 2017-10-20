@@ -105,21 +105,21 @@ task autonomous()
 	setMotorTarget(armMotor, (int)(45.0 * armTicksPerDegree), 100, true);
 
 	//moving to the goal
-	move(50.0, 127, true);
+	move(47.0, 127, true);
 
 	//dropping the cone
 	motor[armHand] = 90;
 	wait1Msec(1000);
 	motor[armHand] = 0;
 
-	move(-11.0, 63, true);
+	move(-9.0, 63, true);
 
 	spin(0.125, 63, false);
 
 	//lowering the arm
 	setMotorTarget(armMotor, (int)(10.0 * armTicksPerDegree), 100, true);
 
-	move(8.0, 63, false);
+	move(9.0, 63, false);
 
 	//closing the hand
 	motor[armHand] = -100;
@@ -134,11 +134,11 @@ task autonomous()
 	//	wait1Msec(10);
 	//}
 
-	move(-7.0, 53, false);
+	move(-9.0, 53, false);
 
 	spin(-0.125, 53, false);
 
-	move(13.0, 53, false);
+	move(10.0, 53, false);
 
 	//dropping the second cone
 	motor[armHand] = 100;
@@ -167,9 +167,9 @@ task usercontrol()
 	while (true)
 	{
 		//Assigns the value of the Y1 axis to the left motor
-		motor[leftMotor] = vexRT[Ch3];
+		motor[leftMotor] = (3 * vexRT[Ch3]) / 4;
 		//Assigns the value of the Y2 axis to the right motor
-		motor[rightMotor] = vexRT[Ch2];
+		motor[rightMotor] = (3 * vexRT[Ch2]) / 4;
 
 		//If button 6 up (right bumper) is pressed
 		if(vexRT[Btn6U]|| vexRT[Btn6UXmtr2])
@@ -192,10 +192,20 @@ task usercontrol()
 
 		// 7L / 7R controls the hand
 		if(vexRT[Btn7L]|| vexRT[Btn7LXmtr2])
+		{
 			motor[armHand] = 100;
+		}
 		else if(vexRT[Btn7R]|| vexRT[Btn7RXmtr2])
+		{
 			motor[armHand] = -100;
+		}
+		else if(vexRT[Btn7U]|| vexRT[Btn7UXmtr2])
+		{
+			motor[armHand] = -15;
+		}
 		else
+		{
 			motor[armHand] = 0;
+		}
 	}
 }
