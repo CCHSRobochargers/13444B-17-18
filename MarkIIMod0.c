@@ -22,6 +22,9 @@
 //Main competition background code...do not modify!
 #include "Vex_Competition_Includes.c"
 
+static const int upSpeed = 127;
+static const int downSpeed = -64;
+
 /*---------------------------------------------------------------------------*/
 /*                          Pre-Autonomous Functions                         */
 /*                                                                           */
@@ -93,15 +96,15 @@ task usercontrol()
 		if(vexRT[Btn6U] == 1)
 		{
 			//Raise the arm
-			motor[rightTop] = 100;
-			motor[rightBottom] = 100;
+			motor[rightTop] = upSpeed;
+			motor[rightBottom] = upSpeed;
 		}
 		//Else, if button 6 down (right trigger) is pressed
 		else if(vexRT[Btn6D] == 1)
 		{
 			//Lower the arm
-			motor[rightTop] = -100;
-			motor[rightBottom] = -100;
+			motor[rightTop] = downSpeed;
+			motor[rightBottom] = downSpeed;
 		}
 		//Else (no button pressed)
 		else
@@ -114,15 +117,15 @@ task usercontrol()
 		if(vexRT[Btn5U] == 1)
 		{
 			//Raise the arm
-			motor[leftTop] = 100;
-			motor[leftBottom] = 100;
+			motor[leftTop] = upSpeed;
+			motor[leftBottom] = upSpeed;
 		}
 		//Else, if button 6 down (right trigger) is pressed
 		else if(vexRT[Btn5D] == 1)
 		{
 			//Lower the arm
-			motor[leftTop] = -100;
-			motor[leftBottom] = -100;
+			motor[leftTop] = downSpeed;
+			motor[leftBottom] = downSpeed;
 		}
 		//Else (no button pressed)
 		else
