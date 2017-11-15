@@ -28,7 +28,7 @@
 #include "Vex_Competition_Includes.c"
 static const float ticksPerInch = 4650 / 96.0; //(627.2 / (4.0 * PI));
 //adjust to compensate for wheel slip
-static const float ticksPerRev = -1.0 * (ticksPerInch * 14.5 * PI);
+static const float ticksPerRev = -1.2 * (ticksPerInch * 14.5 * PI);
 
 static const float ticksPerLiftInch = 627.2 / 20.5;
 
@@ -116,7 +116,7 @@ task autonomous()
 	lift(14.0, 90, true, false);
 
 	//moving to the goal
-	move(54.0, 127, true);
+	move(53.5, 127, true);
 
 	lift(9.0, 90, true, true);
 
@@ -148,9 +148,15 @@ task autonomous()
 	//lifting the lift
 	lift(15, 90, true, true);
 
-	spin(-0.155, 53, false);
+	spin(-0.15, 53, false);
+
+	move(12.0, 53, false);
+
+	spin(0.20, 53, false);
 
 	move(10.0, 53, false);
+
+	lift(11, 90, true, true);
 
 	//dropping the second cone
 	motor[Claw] = 100;
