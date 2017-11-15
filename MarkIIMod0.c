@@ -1,4 +1,5 @@
 #pragma config(I2C_Usage, I2C1, i2cSensors)
+#pragma config(Sensor, dgtl1,  AutonomousSelect, sensorDigitalIn)
 #pragma config(Sensor, I2C_1,  ,               sensorQuadEncoderOnI2CPort,    , AutoAssign )
 #pragma config(Sensor, I2C_2,  ,               sensorQuadEncoderOnI2CPort,    , AutoAssign )
 #pragma config(Sensor, I2C_3,  ,               sensorQuadEncoderOnI2CPort,    , AutoAssign )
@@ -105,9 +106,8 @@ void pre_auton()
 /*  You must modify the code to add your own robot specific commands here.   */
 /*---------------------------------------------------------------------------*/
 
-task autonomous()
+void corner_goal(void)
 {
-
 	resetMotorEncoder(BLL);
 	resetMotorEncoder(BLR);
 
@@ -132,7 +132,6 @@ task autonomous()
 	move(-14.0, 63, true);
 
 	spin(0.125, 63, false);
-
 
 	//lowering the lift
 	lift(2, 90, true, true);
@@ -164,9 +163,39 @@ task autonomous()
 	motor[Claw] = 0;
 }
 
+void tall_goal(void)
+{
+	resetMotorEncoder(BLL);
+	resetMotorEncoder(BLR);
 
+	//pinching and picking up cone
+	motor[Claw] = -20;
+	lift(27.0, 90, true, false);
 
+	//moving to the goal
+	move(12.0, 90, true);
 
+	//dropping the cone
+	lift(22.0, 50, true, true);
+	motor[Claw] = 90;
+	wait1Msec(1000);
+	motor[Claw] = 0;
+
+	//moving beckwards from cone to score cleanly
+	move(-5.0, 90, true);
+}
+
+task autonomous()
+{
+	if(SensorValue(AutonomousSelect))
+	{
+		corner_goal();
+	}
+	else
+	{
+		tall_goal();
+	}
+}
 
 
 /*---------------------------------------------------------------------------*/
