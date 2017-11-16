@@ -1,5 +1,5 @@
 #pragma config(I2C_Usage, I2C1, i2cSensors)
-#pragma config(Sensor, dgtl1,  AutonomousSelect, sensorDigitalIn)
+#pragma config(Sensor, dgtl12, AutonomousSelect, sensorDigitalIn)
 #pragma config(Sensor, I2C_1,  ,               sensorQuadEncoderOnI2CPort,    , AutoAssign )
 #pragma config(Sensor, I2C_2,  ,               sensorQuadEncoderOnI2CPort,    , AutoAssign )
 #pragma config(Sensor, I2C_3,  ,               sensorQuadEncoderOnI2CPort,    , AutoAssign )
@@ -170,10 +170,10 @@ void tall_goal(void)
 
 	//pinching and picking up cone
 	motor[Claw] = -20;
-	lift(27.0, 90, true, false);
+	lift(30.0, 90, true, true);
 
 	//moving to the goal
-	move(12.0, 90, true);
+	move(16.0, 90, true);
 
 	//dropping the cone
 	lift(22.0, 50, true, true);
