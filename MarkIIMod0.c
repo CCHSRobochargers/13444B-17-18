@@ -1,4 +1,5 @@
 #pragma config(I2C_Usage, I2C1, i2cSensors)
+#pragma config(Sensor, dgtl11, AutonomousMobileConeScoreSelect, sensorDigitalIn)
 #pragma config(Sensor, dgtl12, AutonomousSelect, sensorDigitalIn)
 #pragma config(Sensor, I2C_1,  ,               sensorQuadEncoderOnI2CPort,    , AutoAssign )
 #pragma config(Sensor, I2C_2,  ,               sensorQuadEncoderOnI2CPort,    , AutoAssign )
@@ -191,15 +192,72 @@ void tall_goal(void)
 	move(-5.0, 90, true);
 }
 
+void MobileConeScore(void)
+{
+	motor[Claw] = -20;
+	lift(10.0, 90, true, false);
+
+	//moving to the goal
+	move(53.5, 127, true);
+
+	lift(8.0, 90, true, true);
+
+	//dropping the cone
+	motor[Claw] = 90;
+	wait1Msec(1000);
+	motor[Claw] = 0;
+
+	move(-18.0, 63, true);
+
+	spin(-0.125, 63, false);
+
+	move(-14.0, 63, true);
+
+	spin(0.125, 63, false);
+
+	//lowering the lift
+	lift(2, 90, true, true);
+	move(21.0, 63, false);
+
+	//closing the hand
+	motor[Claw] = -100;
+	wait1Msec(1000);
+	motor[Claw] = -40;
+
+	wait1Msec(200);
+
+	//lifting the lift
+	lift(15, 90, true, true);
+
+	spin(-0.15, 53, false);
+
+	move(12.0, 53, false);
+
+	spin(0.20, 53, false);
+
+	move(10.0, 53, false);
+
+	lift(11, 90, true, true);
+
+	//dropping the second cone
+	motor[Claw] = 100;
+	wait1Msec(1000);
+	motor[Claw] = 0;
+}
+
 task autonomous()
 {
 	if(SensorValue(AutonomousSelect))
 	{
 		corner_goal();
 	}
-	else
+	else if(SensorValue(AutonomousMobileConeScoreSelect))
 	{
 		tall_goal();
+	}
+	else
+	{
+		MobileConeScore();
 	}
 }
 
