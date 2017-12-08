@@ -178,13 +178,9 @@ void MobileConeScore(void)
 
 	move(36.0, 127, true);
 
-	spin(-0.125, 127, true);
+	spin(0.375, 127, true);
 
 	move(18.0, 127, true);
-
-	spin(-0.25, 100, true);
-
-	move(-24.0, 127, true);
 
 	motor[Pully] = 100;
 	wait1Msec(375);
@@ -192,7 +188,7 @@ void MobileConeScore(void)
 	motor[Pully] = 0;
 	wait1Msec(250);
 
-	move(36.0, 127, true);
+	move(12.0, 127, true);
 }
 
 task autonomous()
