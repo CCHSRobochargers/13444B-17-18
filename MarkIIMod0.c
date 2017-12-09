@@ -251,7 +251,7 @@ task usercontrol()
     {
     	motor[Right] = motor[Left] = 0;
     }
-		//Else if the left bumper or left trigger is pressed
+		//Else if the right bumper or right trigger is pressed
 		if(vexRT[Btn6UXmtr2])
 		{
 			motor[Pully] = 100;
