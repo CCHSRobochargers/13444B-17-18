@@ -142,7 +142,7 @@ void tall_goal(void)
 
 	//pinching and picking up cone
 	motor[Claw] = -20;
-	lift(30.0, 90, true, true);
+	lift(28.0, 90, true, true);
 
 	//moving to the goal
 	move(16.0, 90, true);
