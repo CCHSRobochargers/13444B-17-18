@@ -39,7 +39,7 @@ static const float ticksPerRev = -1.2 * (ticksPerInch * 14.5 * PI);
 
 static const float ticksPerLiftInch = 598.0 / 20.0;
 
-static const float ticksPerForkliftInch = 627.2 / (0.25 * PI);
+static const float ticksPerForkliftInch = 627.2 / (0.5 * PI);
 
 void move(float dist, int speed, bool hold)
 {
@@ -178,29 +178,35 @@ void MobileConeScore(void)
 	resetMotorEncoder(Left);
 	resetMotorEncoder(Right);
 
-	forklift(-0.5, 100, false, true);
+	forklift(-1.0, 100, false, false);
 
-	move(-46.0, 127, true);
+	move(-47.0, 127, true);
 
-	motor [Pully] = 100;
-	wait1Msec(1200);
+	motor [Pully] = 127;
+	wait1Msec(2500);
 	motor [Pully] = 0;
 
-	forklift(1.0, 100, true, true);
+	forklift(0.0, 100, false, true);
+
+	spin(-.0625 * 2.5, 100, true);
 
 	move(36.0, 127, true);
-
-	spin(0.375, 127, true);
+	//spinning is exagarated to make up for traction loss
+	spin(0.375 * 2.5, 100, true);
 
 	move(-18.0, 127, true);
 
-	motor[Pully] = 100;
-	wait1Msec(375);
-	motor[Right] = motor[Left] = 127;
-	motor[Pully] = 0;
-	wait1Msec(250);
+	spin(0.275 * 1.5, 100, true);
 
-	move(12.0, 127, true);
+	move(-30.0, 127, true);
+
+	motor[Pully] = -127;
+	wait1Msec(2500);
+	motor[Pully] = 0;
+
+	forklift(1.0, 127, false, true);
+
+	move(18.0, 127, true);
 }
 
 task autonomous()
