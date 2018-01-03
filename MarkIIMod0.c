@@ -188,17 +188,13 @@ void MobileConeScore(void)
 
 	forklift(0.0, 100, false, true);
 
-	spin(-.0625 * 2.5, 100, true);
+	spin(-.0625 * 2.5, 127, true);
 
-	move(36.0, 127, true);
+	move(72.0, 127, true);
 	//spinning is exagarated to make up for traction loss
-	spin(0.375 * 2.5, 100, true);
+	spin(-0.4375 * 2.0, 127, true);
 
-	move(-18.0, 127, true);
-
-	spin(0.275 * 1.5, 100, true);
-
-	move(-30.0, 127, true);
+	move(-20.0, 127, true);
 
 	motor[Pully] = -127;
 	wait1Msec(2500);
