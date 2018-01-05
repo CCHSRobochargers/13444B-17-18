@@ -110,6 +110,10 @@ void pre_auton()
   slaveMotor(BackL, DriveL);
 	slaveMotor(BLL, BLR);
 
+	resetMotorEncoder(BLL);
+	resetMotorEncoder(BLR);
+	resetMotorEncoder(Left);
+	resetMotorEncoder(Right);
 	// Set bDisplayCompetitionStatusOnLcd to false if you don't want the LCD
 	// used by the competition include file, for example, you might want
 	// to display your team name on the LCD in this function.
@@ -173,36 +177,29 @@ void tall_goal(void)
 
 void MobileConeScore(void)
 {
-	resetMotorEncoder(BLL);
-	resetMotorEncoder(BLR);
-	resetMotorEncoder(Left);
-	resetMotorEncoder(Right);
+	forklift(-1.0, 127, false, false);
 
-	forklift(-1.0, 100, false, false);
+	move(-47.0, 127, false);
 
-	move(-47.0, 127, true);
+	forklift(0.0, 127, false, false);
 
 	motor [Pully] = 127;
-	wait1Msec(2500);
+	spin(-.04 * 2.5, 127, false);
+	wait1Msec(1000);
 	motor [Pully] = 0;
 
-	forklift(0.0, 100, false, true);
-
-	spin(-.0625 * 2.5, 127, true);
-
-	move(72.0, 127, true);
+	move(55.0, 127, false);
 	//spinning is exagarated to make up for traction loss
-	spin(-0.4375 * 2.0, 127, true);
+	spin(-0.4375 * 2.2, 127, false);
 
-	move(-20.0, 127, true);
+	move(-15.0, 127, false);
+
+	forklift(1.0, 127, false, false);
 
 	motor[Pully] = -127;
-	wait1Msec(2500);
+	move(18.0, 127, false);
 	motor[Pully] = 0;
 
-	forklift(1.0, 127, false, true);
-
-	move(18.0, 127, true);
 }
 
 task autonomous()
