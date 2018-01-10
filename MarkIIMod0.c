@@ -31,7 +31,7 @@
 // Select Download method as "competition"
 #pragma competitionControl(Competition)
 
-//Main competition background code...do not modify!
+//Main competition background code...do not modify!m
 #include "Vex_Competition_Includes.c"
 static const float ticksPerInch = 4650 / 96.0; //(627.2 / (4.0 * PI));
 //adjust to compensate for wheel slip
@@ -110,10 +110,6 @@ void pre_auton()
   slaveMotor(BackL, DriveL);
 	slaveMotor(BLL, BLR);
 
-	resetMotorEncoder(BLL);
-	resetMotorEncoder(BLR);
-	resetMotorEncoder(Left);
-	resetMotorEncoder(Right);
 	// Set bDisplayCompetitionStatusOnLcd to false if you don't want the LCD
 	// used by the competition include file, for example, you might want
 	// to display your team name on the LCD in this function.
@@ -177,11 +173,11 @@ void tall_goal(void)
 
 void MobileConeScore(void)
 {
-	forklift(-1.0, 127, false, false);
+	forklift(-1.0, 127, true, false);
 
 	move(-47.0, 127, false);
 
-	forklift(0.0, 127, false, false);
+	forklift(0.0, 127, true, false);
 
 	motor [Pully] = 127;
 	spin(-.04 * 2.5, 127, false);
@@ -190,23 +186,39 @@ void MobileConeScore(void)
 
 	move(55.0, 127, false);
 	//spinning is exagarated to make up for traction loss
-	spin(-0.4375 * 2.2, 127, false);
+	spin(-0.4375 * 1.8, 127, false);
 
 	move(-15.0, 127, false);
 
-	forklift(1.0, 127, false, false);
+	forklift(1.0, 127, true, false);
 
 	motor[Pully] = -127;
 	move(18.0, 127, false);
 	motor[Pully] = 0;
+}
 
+void blocking(void)
+{
+	move(96.0, 127, false);
 }
 
 task autonomous()
 {
+	resetMotorEncoder(BLL);
+	resetMotorEncoder(BLR);
+	resetMotorEncoder(Left);
+	resetMotorEncoder(Right);
+
 	if(SensorValue(AutonomousSelect))
 	{
-		corner_goal();
+		if(SensorValue(AutonomousMobileConeScoreSelect))
+		{
+			corner_goal();
+		}
+		else
+		{
+			blocking();
+		}
 	}
 	else if(SensorValue(AutonomousMobileConeScoreSelect))
 	{
